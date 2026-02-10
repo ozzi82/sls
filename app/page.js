@@ -60,7 +60,6 @@ export const metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
-  themeColor: "#0b0f1a",
   verification: {
     google: "add-your-google-verification-code-here",
   },
