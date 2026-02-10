@@ -1,12 +1,31 @@
 import Link from "next/link";
-import { CheckCircle, ArrowLeft } from "lucide-react";
+import { CheckCircle, ArrowLeft, Ruler, Palette, Wrench, Shield, Zap, Award, Package, Layers } from "lucide-react";
 import ProductHero from "../ProductHero";
-import { products, getProductById } from "../../data/products";
+import { getAllProducts } from "../../config/site";
 import ImageSlider from "../../components/ImageSlider";
+import CompareWidget from "../CompareWidget";
+import RelatedProducts from "../RelatedProducts";
+
+// Helper function to get product by ID
+const getProductById = (id) => getAllProducts().find((p) => p.id === id);
+
+// Helper function to get icon for specification
+const getSpecIcon = (label) => {
+  const lowerLabel = label.toLowerCase();
+  if (lowerLabel.includes("material") || lowerLabel.includes("acrylic")) return Layers;
+  if (lowerLabel.includes("thickness") || lowerLabel.includes("height") || lowerLabel.includes("width") || lowerLabel.includes("stroke")) return Ruler;
+  if (lowerLabel.includes("color") || lowerLabel.includes("customization") || lowerLabel.includes("finish")) return Palette;
+  if (lowerLabel.includes("maintenance") || lowerLabel.includes("installation")) return Wrench;
+  if (lowerLabel.includes("warranty") || lowerLabel.includes("guarantee")) return Shield;
+  if (lowerLabel.includes("certification") || lowerLabel.includes("ul") || lowerLabel.includes("cert")) return Award;
+  if (lowerLabel.includes("voltage") || lowerLabel.includes("power") || lowerLabel.includes("watt") || lowerLabel.includes("led")) return Zap;
+  if (lowerLabel.includes("package") || lowerLabel.includes("shipping")) return Package;
+  return Ruler; // default icon
+};
 
 
 export async function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }));
+  return getAllProducts().map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }) {
@@ -20,6 +39,17 @@ export async function generateMetadata({ params }) {
 
 export default function ProductDetailPage({ params }) {
   const product = getProductById(params.id);
+  const allProducts = getAllProducts();
+
+  // Get similar products (same category or type)
+  const similarProducts = allProducts.filter(p =>
+    p.id !== params.id &&
+    (p.category === product?.category || p.type === product?.type)
+  );
+
+  // Get related products for "You May Also Like"
+  const relatedProducts = allProducts.filter(p => p.id !== params.id);
+
   if (!product) {
     return (
       <main className="container mx-auto px-4 py-24">
@@ -162,27 +192,64 @@ export default function ProductDetailPage({ params }) {
           </div>
 
           {/* Specifications */}
-          <div className="mt-12 rounded-2xl border border-neutral-800 bg-neutral-900/60 shadow">
-            <div className="p-6 border-b border-neutral-800">
-              <h2 className="text-2xl font-bold text-white">Technical Specifications</h2>
-              <p className="text-neutral-400 text-sm">
-                Detailed technical information and specifications
+          <div className="mt-16">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-3">
+                <span className="bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-400 bg-clip-text text-transparent">
+                  Technical Specifications
+                </span>
+              </h2>
+              <p className="text-neutral-400 text-lg">
+                Professional-grade specifications for superior performance
               </p>
             </div>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(product.specifications).map(([label, value]) => (
-                <div key={label} className="space-y-2">
-                  <div className="font-medium text-white">{label}:</div>
-                  <p className="text-sm text-neutral-300 pl-4 border-l-2 border-neutral-700">
-                    {value}
-                  </p>
-                </div>
-              ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {product.specifications && Object.entries(product.specifications).map(([label, value]) => {
+                const Icon = getSpecIcon(label);
+                return (
+                  <div
+                    key={label}
+                    className="group relative overflow-hidden rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 backdrop-blur-sm p-5 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-orange-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-semibold text-orange-400/80 uppercase tracking-wider mb-1">
+                          {label}
+                        </div>
+                        <div className="text-sm text-neutral-200 leading-relaxed">
+                          {value}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
+          {/* Compare Widget */}
+          {similarProducts.length > 0 && (
+            <CompareWidget
+              currentProduct={product}
+              similarProducts={similarProducts}
+            />
+          )}
+
+          {/* Related Products */}
+          <RelatedProducts
+            products={relatedProducts}
+            currentProductId={params.id}
+          />
+
           {/* CTA */}
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <div className="inline-block rounded-2xl border border-neutral-800 bg-neutral-900/60 shadow">
               <div className="p-8 max-w-2xl">
                 <h3 className="text-2xl font-bold text-white mb-3">

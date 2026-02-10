@@ -4,50 +4,42 @@ import { CheckCircle, Users, Shield, Clock, Award, Factory, Truck } from "lucide
 export const metadata = {
   title: "About | Sunlite Signs",
   description:
-    "25 years of innovation in wholesale signage manufacturing. Trimless channel letters, acrylic letters, and nationwide service.",
+    "25 years of innovation in wholesale signage manufacturing. German-engineered design with US operations in Florida and Minnesota. Serving 1,000+ sign companies across North America.",
 };
 
 export default function AboutPage() {
-  const milestones = [
-    { year: "1999", event: "Company Founded", description: "Started as a small fabrication shop" },
-    { year: "2005", event: "First Major Expansion", description: "Added automated cutting equipment" },
-    { year: "2010", event: "LED Technology Leader", description: "Early adopter of LED lighting systems" },
-    { year: "2015", event: "Trimless Innovation", description: "Developed proprietary trimless channel letter process" },
-    { year: "2020", event: "National Distribution", description: "Serving all 50 states and Canada" },
-    { year: "2024", event: "25 Years Strong", description: "Industry leader in wholesale manufacturing" },
-  ];
 
   const capabilities = [
     {
       icon: <Factory className="w-8 h-8" />,
-      title: "50,000 sq ft Manufacturing",
+      title: "German-Engineered Design",
       description:
-        "State-of-the-art facility with advanced CNC equipment, laser cutting, and automated LED assembly lines.",
+        "R&D and quality standards developed in Germany, bringing European precision to North American markets.",
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "Expert Team",
+      title: "US Operations",
       description:
-        "Skilled craftspeople, engineers, and quality control specialists with decades of combined experience.",
+        "Strategic operations in Florida and Minnesota, providing fast turnaround and personalized service across North America.",
     },
     {
       icon: <Shield className="w-8 h-8" />,
       title: "Quality Standards",
       description:
-        "ISO 9001 certified quality management system ensuring consistent, reliable manufacturing processes.",
+        "Rigorous quality control and testing ensure consistent, reliable products meeting UL safety standards.",
     },
     {
       icon: <Truck className="w-8 h-8" />,
       title: "Nationwide Shipping",
       description:
-        "Fast, secure shipping to all 50 states and Canada with tracking and white-glove delivery options.",
+        "Fast, secure shipping to all 50 states and Canada with ~21 day delivery and tracking.",
     },
   ];
 
   const quality = [
     { icon: <Shield className="w-8 h-8 text-orange-400" />, title: "UL Listed", text: "All LED components meet UL safety standards" },
-    { icon: <Award className="w-8 h-8 text-orange-400" />, title: "ISO 9001", text: "Certified quality management system" },
-    { icon: <Clock className="w-8 h-8 text-orange-400" />, title: "5 Year Warranty", text: "Comprehensive warranty on all LED systems" },
+    { icon: <Award className="w-8 h-8 text-orange-400" />, title: "German Engineered", text: "European design and quality standards" },
+    { icon: <Clock className="w-8 h-8 text-orange-400" />, title: "3 Year Warranty", text: "Comprehensive warranty coverage" },
     { icon: <CheckCircle className="w-8 h-8 text-orange-400" />, title: "100% QC", text: "Every product tested before shipment" },
   ];
 
@@ -115,11 +107,10 @@ export default function AboutPage() {
             </p>
 
             {/* glass stat chips */}
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { label: "Years", value: "25+" },
-                { label: "Partners", value: "2,500+" },
-                { label: "Projects", value: "150k+" },
+                { label: "Partners", value: "1,000+" },
                 { label: "Coverage", value: "US & CA" },
               ].map((s) => (
                 <div
@@ -135,64 +126,38 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* STORY + TIMELINE */}
+      {/* STORY */}
       <section className="relative overflow-hidden py-20">
-        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="container mx-auto px-6 max-w-5xl">
           {/* Story card */}
-          <div className="relative rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+          <div className="relative rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Our Story</h2>
             <p className="text-lg text-neutral-300 mb-6">
-              Founded in 1999, Sunlite Signs began as a small fabrication shop with a simple mission:
-              create the highest quality channel letters and signage products for the sign industry.
+              Founded in 1999 with German engineering heritage, Sunlite Signs brings European precision
+              and quality standards to the North American sign industry through our EdgeLuxe product line.
             </p>
             <p className="text-lg text-neutral-300 mb-6">
-              Over 25 years, we've grown into one of North America's leading wholesale signage manufacturers,
+              With R&D rooted in German engineering excellence, we expanded to US operations in Florida and Minnesota in 2023,
               pioneering innovations like true trimless channel letters and advanced LED integration systems.
             </p>
             <p className="text-lg text-neutral-300 mb-8">
-              Today, we serve over 2,500 sign companies across the USA and Canada, maintaining our commitment
-              to quality, innovation, and the partnerships that built our success.
+              Today, we serve over 1,000 sign companies across the USA, Canada, and Europe, combining German design
+              standards with responsive service and fast turnaround times.
             </p>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
-                <div className="text-3xl font-bold text-white">2,500+</div>
-                <div className="text-sm text-neutral-300">Sign Company Partners</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+              <div className="text-center p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+                <div className="text-4xl font-bold text-white mb-2">1999</div>
+                <div className="text-sm text-neutral-300">Founded</div>
               </div>
-              <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
-                <div className="text-3xl font-bold text-white">150,000+</div>
-                <div className="text-sm text-neutral-300">Projects Completed</div>
+              <div className="text-center p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+                <div className="text-4xl font-bold text-white mb-2">2023</div>
+                <div className="text-sm text-neutral-300">US Operations</div>
               </div>
-            </div>
-          </div>
-
-          {/* Company Timeline (fixed, liquid-glass) */}
-          <div className="relative rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
-            <h3 className="text-2xl font-bold text-white mb-6">Company Timeline</h3>
-
-            {/* vertical guide line + list */}
-            <div className="relative">
-              <span className="pointer-events-none absolute left-[32px] top-3 bottom-3 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
-              <ol className="mt-2">
-                {milestones.map((m) => (
-                  <li key={m.year} className="relative grid grid-cols-[72px_1fr] gap-4 py-3">
-                    {/* year badge */}
-                    <div className="relative flex items-start justify-center">
-                      <div className="h-12 w-12 rounded-full bg-white/8 border border-white/20 backdrop-blur-md ring-4 ring-orange-400/15 shadow flex items-center justify-center text-xs font-semibold text-white">
-                        {m.year}
-                      </div>
-                      {/* connector */}
-                      <span className="absolute left-[68px] top-[24px] h-px w-5 bg-white/15" />
-                    </div>
-
-                    {/* event card */}
-                    <div className="group rounded-2xl bg-white/5 border border-white/10 p-4">
-                      <div className="text-lg font-semibold text-white">{m.event}</div>
-                      <p className="text-neutral-300">{m.description}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="text-center p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+                <div className="text-4xl font-bold text-white mb-2">1,000+</div>
+                <div className="text-sm text-neutral-300">Partners Worldwide</div>
+              </div>
             </div>
           </div>
         </div>

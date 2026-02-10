@@ -1,9 +1,11 @@
 // app/page.js
 import Hero from "./components/Hero";
-import Services from "./components/Services";
+import TrustBar from "./components/TrustBar";
 import FAQ from "./components/FAQ";
 import Products from "./components/Products";
 import FeaturedProducts from "./components/FeaturedProducts";
+import WhyEdgeLuxe from "./components/WhyEdgeLuxe";
+import Testimonials from "./components/Testimonials";
 // If your Header is rendered in app/layout.tsx, you can remove this import
 // import Header from "./components/Header";
 
@@ -19,11 +21,12 @@ const OG_IMAGE = `${SITE}/og.jpg`;         // create a 1200x630 image in /public
 export const metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "Sunlite Signs — Wholesale Trimless Channel Letters",
+    default: "Wholesale Sign Manufacturer | UL Listed Trimless Channel Letters & LED Signage | Sunlite Signs",
     template: "%s | Sunlite Signs",
   },
   description:
-    "UL-listed trimless channel letters & cast block acrylic letters. 24–48h quotes, pro drawings, ~21-day delivery across USA & Canada.",
+    "Premium wholesale sign manufacturing: UL listed trimless channel letters, FCO letters, illuminated blade signs, cast block acrylic letters. 48-hour quote turnaround, 3-week door-to-door delivery across USA & Canada. Serving sign companies for 25+ years.",
+  keywords: "wholesale sign manufacturer, UL listed channel letters, trimless channel letters wholesale, FCO flat cut out letters, illuminated blade signs, LED channel letters, cast block acrylic letters, halo-lit channel letters, face-lit channel letters, commercial signage wholesale, architectural signage manufacturer, custom LED signs wholesale, sign fabrication USA Canada, wholesale sign company, dimensional letters manufacturer, low-profile illuminated letters",
   alternates: {
     canonical: "/",
     languages: {
@@ -35,22 +38,22 @@ export const metadata = {
     type: "website",
     url: SITE,
     siteName: "Sunlite Signs",
-    title: "Sunlite Signs — Wholesale Trimless Channel Letters",
+    title: "Wholesale Sign Manufacturer | UL Listed Channel Letters & LED Signage",
     description:
-      "UL-listed trimless channel letters & cast block acrylic letters. 24–48h quotes, pro drawings, ~21-day delivery across USA & Canada.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Sunlite Signs manufacturing" }],
+      "Premium wholesale sign manufacturing: UL listed trimless channel letters, FCO letters, illuminated signage. 48-hour quotes, 3-week delivery across USA & Canada.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Sunlite Signs wholesale sign manufacturing facility" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sunlite Signs — Wholesale Trimless Channel Letters",
+    title: "Wholesale Sign Manufacturer | UL Listed Channel Letters & LED Signage",
     description:
-      "UL-listed trimless channel letters & cast block acrylic letters. 24–48h quotes, pro drawings, ~21-day delivery across USA & Canada.",
+      "Premium wholesale sign manufacturing: UL listed trimless channel letters, FCO letters, illuminated signage. 48-hour quotes, 3-week delivery.",
     images: [OG_IMAGE],
   },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png", // add this file if you want iOS icon support
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
@@ -58,6 +61,9 @@ export const metadata = {
     googleBot: { index: true, follow: true },
   },
   themeColor: "#0b0f1a",
+  verification: {
+    google: "add-your-google-verification-code-here",
+  },
 };
 
 export default function Home() {
@@ -128,7 +134,7 @@ export default function Home() {
       acceptedAnswer: {
         "@type": "Answer",
         text:
-          "Yes. We crate and insure all shipments and provide photo documentation before they leave our facility.",
+          "Yes. We crate and insure all shipments and provide photo documentation before shipment.",
       },
     },
   ];
@@ -198,7 +204,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100">
+    <div className="min-h-screen bg-neutral-950 text-neutral-100">
       {/* JSON-LD */}
       <JsonLd data={organization} />
       <JsonLd data={website} />      {/* remove if you don’t have /search */}
@@ -209,8 +215,9 @@ export default function Home() {
 
       {/* Page sections */}
       <Hero />
+      <TrustBar />
       <Products />
-      <Services />
+      <WhyEdgeLuxe />
 
 {/* Capabilities teaser (upgraded) */}
 <section id="capabilities" aria-labelledby="capabilities-heading" className="relative overflow-hidden bg-neutral-950 py-20">
@@ -350,8 +357,11 @@ export default function Home() {
 
       {/* <FeaturedProducts />  */}
 
-      {/* Show FAQ UI but don’t emit duplicate JSON-LD here (we already did above) */}
+      {/* Testimonials & Social Proof */}
+      <Testimonials />
+
+      {/* Show FAQ UI but don't emit duplicate JSON-LD here (we already did above) */}
       <FAQ withSchema={false} maxItems={4} title="FAQs about our manufacturing" />
-    </main>
+    </div>
   );
 }

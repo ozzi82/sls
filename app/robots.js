@@ -1,6 +1,12 @@
 export default function robots() {
   return {
-    rules: [{ userAgent: "*", allow: "/" }],
-    sitemap: "https://example.com/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/admin/"]
+      }
+    ],
+    sitemap: "https://www.sunlitesigns.com/sitemap.xml",
   };
 }

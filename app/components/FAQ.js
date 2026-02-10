@@ -32,7 +32,7 @@ export default function FAQ({
     {
       question: "Do you ship to Canada?",
       answer:
-        "Yes, we ship to both USA and Canada. All products are manufactured in Florida and shipped via freight carriers. Shipping costs are calculated based on weight, dimensions, and destination.",
+        "Yes, we ship to both USA and Canada with ~21 day door-to-door delivery via freight carriers. Shipping costs are calculated based on weight, dimensions, and destination.",
     },
     {
       question: "What's included with every order?",

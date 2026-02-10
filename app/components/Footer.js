@@ -1,20 +1,33 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 
 export default function Footer() {
   const productLinks = [
-    { name: "Trimless Channel Letters", href: "/products/trimless-channel-letters" },
-    { name: "Cast Block Acrylic Letters", href: "/products/cast-acrylic-letters" },
-    { name: "Flat Cut Metal Letters", href: "/products/flat-cut-letters" },
-    { name: "Backlit Channel Letters", href: "/products/backlit-letters" },
-    { name: "Custom Metal Fabrication", href: "/products/metal-fabrication" },
+    { name: "Product Catalog", href: "/products" },
+    { name: "Trimless Channel Letters", href: "/trimless-channel-letters" },
+    { name: "Cast Acrylic Letters", href: "/cast-acrylic-letters" },
+    { name: "FCO Letters", href: "/fco-letters" },
+    { name: "Blade Signs", href: "/blade-signs" },
+    { name: "Cabinet Signs", href: "/cabinet-signs" },
   ];
 
   const companyLinks = [
     { name: "About Us", href: "/about" },
-    { name: "Manufacturing Process", href: "/about#process" },
-    { name: "Quality Standards", href: "/about#quality" },
-    { name: "Wholesale Partner Program", href: "/about#partnership" },
+    { name: "Project References", href: "/projects" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Resources & Downloads", href: "/resources" },
+    { name: "Contact & Quote", href: "/contact" },
+    { name: "FAQ", href: "/faq" },
+  ];
+
+  const toolsLinks = [
+    { name: "Product Comparison", href: "/compare" },
+    { name: "Retail Solutions", href: "/solutions/retail" },
+    { name: "Healthcare Solutions", href: "/solutions/healthcare" },
+    { name: "Corporate Solutions", href: "/solutions/corporate" },
+    { name: "Restaurant Solutions", href: "/solutions/restaurant" },
   ];
 
   return (
@@ -83,11 +96,29 @@ export default function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-orange-400" />
-                <span className="text-neutral-200/90">689-294-0912</span>
+                <div className="flex flex-col gap-1">
+                  <a href="tel:+16892940912" className="text-neutral-200/90 hover:text-orange-300 transition-colors">
+                    EAST: +1 (689) 294-0912
+                  </a>
+                  <a href="tel:+16512302827" className="text-neutral-200/90 hover:text-orange-300 transition-colors">
+                    WEST: +1 (651) 230-2827
+                  </a>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-orange-400" />
-                <span className="text-neutral-200/90">hello@sunlitesigns.com</span>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const user = "hello";
+                    const domain = "sunlitesigns.com";
+                    window.location.href = `mailto:${user}@${domain}`;
+                  }}
+                  className="text-neutral-200/90 hover:text-orange-300 transition-colors"
+                >
+                  Click to email
+                </a>
               </div>
             </div>
           </div>
@@ -126,13 +157,28 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Service Areas */}
+          {/* Tools & Resources */}
           <div className="relative rounded-2xl border border-white/10 bg-white/6 backdrop-blur-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.35)] transition-colors hover:bg-white/8">
-            <h4 className="font-semibold text-lg mb-4 text-white">Service Areas</h4>
-            <ul className="space-y-2 text-sm text-neutral-300">
-              <li>• United States (All 50 States)</li>
-              <li>• Canada (All Provinces)</li>
+            <h4 className="font-semibold text-lg mb-4 text-white">Tools & Solutions</h4>
+            <ul className="space-y-2 text-sm">
+              {toolsLinks.map((link, i) => (
+                <li key={i}>
+                  <Link
+                    href={link.href}
+                    className="text-neutral-300 hover:text-orange-400 transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <h5 className="font-semibold text-sm mb-2 text-white">Service Areas</h5>
+              <ul className="space-y-1 text-sm text-neutral-300">
+                <li>• United States</li>
+                <li>• Canada</li>
+              </ul>
+            </div>
           </div>
         </div>
 

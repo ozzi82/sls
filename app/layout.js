@@ -1,28 +1,40 @@
 import "./globals.css";
+import { Inter } from 'next/font/google';
 import Header from "./components/Header";
 import Footer from "./components/Footer"; // if you have one
 import FloatingCTA from "./components/FloatingCTA";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Optimize font loading with next/font
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  preload: true,
+});
 
 export const metadata = {
-  title: "Wholesale Acrylic & Channel Letters | Custom Sign Manufacturing",
-  description: "Bulk acrylic letters, trimless channel letters, cabinet & blade signs. Custom illuminated signage solutions for businesses nationwide. Fast, reliable fabrication.",
-  keywords: "wholesale acrylic sign letters, flush-face channel letters, LED illuminated cabinet signs, blade signage systems, bulk sign fabrication, custom illuminated signs, slim profile letters, dimensional letters and logos, illuminated signage components, low profile flush letters, sign lighting solutions, metal dimensional signs, acrylic dimensional signs, custom plaques, hard-case signage, business sign manufacturing, commercial sign solutions",
+  title: "Wholesale Sign Manufacturing | UL Listed Channel Letters & LED Signage | Sunlite Signs",
+  description: "Premium wholesale sign manufacturer specializing in UL listed trimless channel letters, FCO letters, illuminated signage, blade signs, and custom LED solutions. 48-hour quote turnaround, 3-week door-to-door delivery. Serving sign companies across USA & Canada since 25+ years.",
+  keywords: "wholesale sign manufacturer, UL listed channel letters, trimless channel letters wholesale, FCO letters wholesale, illuminated signs manufacturer, LED signage wholesale, custom channel letters, wholesale blade signs, commercial signage manufacturing, architectural signage wholesale, sign fabrication USA, wholesale sign company, custom illuminated letters, face-lit channel letters, halo-lit channel letters, cast acrylic letters wholesale, dimensional signage manufacturer, commercial sign wholesale",
 };
 
 export default function RootLayout({ children }) {
   return (
-      <html lang="en" className="dark antialiased"> {/* <- forces dark theme */}
-      <body className="min-h-screen bg-background text-foreground">
-    
+      <html lang="en" className={`dark antialiased ${inter.variable}`}>
+      <body className="min-h-screen bg-background text-foreground font-sans">
+
         <ScrollToTop />
-        <Header />
+        <div className="print:hidden">
+          <Header />
+        </div>
         <main>{children}</main>
-        <FloatingCTA />
-        <Footer />
+        <div className="print:hidden">
+          <FloatingCTA />
+          <Footer />
+        </div>
       </body>
-      
+
     </html>
   );
 }

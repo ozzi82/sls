@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm install)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(taskkill:*)",
+      "Bash(node verify-products.js:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(timeout /t 3 /nobreak)",
+      "Bash(exit 0)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(timeout /t 8 /nobreak)",
+      "Bash(node -c:*)",
+      "Bash(ren:*)",
+      "Bash(ren lp5-trimless.jpg hero-lp5.jpg)",
+      "Bash(if exist .next rmdir /s /q .next)",
+      "Bash(npx kill-port:*)",
+      "Bash(node -e:*)",
+      "Bash(node:*)",
+      "Bash(npm --version:*)",
+      "Bash(npx next build)",
+      "Bash(netstat:*)",
+      "Bash(cmd /c \"tasklist /FI \"\"PID eq 65000\"\" /FO CSV /NH\")",
+      "Bash(git add:*)"
+    ]
+  }
+}

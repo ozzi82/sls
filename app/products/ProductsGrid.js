@@ -1,9 +1,10 @@
-// app/components/ProductGrid.js
-import { products } from "../data/products";
-import ProductCard from "./ProductCard";
+// app/products/ProductsGrid.js
+import Link from "next/link";
+import Image from "next/image";
+import { getAllProducts } from "../config/site";
 
 export default function ProductGrid({ title = "Our Products", subtitle }) {
-  const list = Array.isArray(products) ? products : [];
+  const list = getAllProducts();
 
   return (
     <section className="relative py-20 bg-neutral-950 overflow-hidden">
@@ -54,25 +55,87 @@ export default function ProductGrid({ title = "Our Products", subtitle }) {
           </div>
         )}
 
-        {/* empty state */}
-        {list.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-white/6 backdrop-blur-xl p-8 text-center text-neutral-300">
-            No products available yet.
+        {/* Product Categories */}
+        <div className="space-y-16">
+          {/* Fabricated Channel Letters */}
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-orange-400 pl-4">
+              Fabricated Channel Letters
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {list.filter(p => p.category === "Fabricated Channel Letters").map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {list.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={{
-                  ...p,
-                  image: p.dayImage || p.nightImage || p.image || "/placeholder.png",
-                }}
-              />
-            ))}
+
+          {/* Cast Block Acrylic */}
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-orange-400 pl-4">
+              Cast Block Acrylic Letters
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {list.filter(p => p.category === "Cast Block Acrylic").map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
           </div>
-        )}
+
+          {/* Cabinet Signs */}
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-orange-400 pl-4">
+              Cabinet Signs
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {list.filter(p => p.category === "Cabinet Signs").map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function ProductCard({ product }) {
+  return (
+    <div className="relative group rounded-2xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="aspect-video overflow-hidden relative">
+        <Image
+          src={product.image}
+          alt={product.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-700"
+          loading="lazy"
+          quality={75}
+        />
+      </div>
+
+      <div className="p-6 relative z-10">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-semibold text-white">{product.title}</h3>
+        </div>
+        <p className="text-sm text-neutral-300 mb-4">{product.description}</p>
+        <p className="text-orange-400 font-semibold mb-4">{product.price}</p>
+
+        <ul className="space-y-1 mb-4">
+          {product.features.slice(0, 3).map((f, idx) => (
+            <li key={idx} className="text-xs text-neutral-300 flex items-center">
+              <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2" />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          href={`/products/${product.id}`}
+          className="w-full inline-flex items-center justify-center px-4 py-2 bg-orange-500 text-white font-medium rounded hover:bg-orange-600 transition"
+        >
+          View Details
+        </Link>
+      </div>
+    </div>
   );
 }

@@ -36,15 +36,15 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Get in Touch with Our Team",
-      primary: { label: "WEST: +1 123 4455 · Kenan Hanhan", href: "tel:+11234455" },
-      secondary: { label: "EAST: +1 123 4455 · Ozan Yilmaz", href: "tel:+11234455" },
+      primary: { label: "EAST: +1 (689) 294-0912 · Ozan Yilmaz", href: "tel:+16892940912" },
+      secondary: { label: "WEST: +1 (651) 230-2827 · Kenan Hanhan", href: "tel:+16512302827" },
       description: "Speak directly with our sales team.",
       hours: "Mon–Fri · 7:00 AM – 6:00 PM EST",
     },
     {
       icon: Mail,
       title: "Email Quotes",
-      primary: { label: "hello@sunlitesigns.com", href: "mailto:hello@sunlitesigns.com" },
+      primary: { label: "", href: "" }, // Will use encrypted email
       description: "Send detailed specifications for pricing.",
       hours: "",
     },
@@ -145,30 +145,49 @@ export default function Contact() {
                       <m.icon className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-white mb-1">{m.title}</h3>
+                      <h3 className="text-xl font-bold text-white mb-3">{m.title}</h3>
 
-                      {m.primary?.label && (
-                        <p className="text-neutral-200 font-medium">
-                          {m.primary.href ? (
-                            <Link href={m.primary.href} className="hover:underline">
-                              {m.primary.label}
-                            </Link>
-                          ) : (
-                            m.primary.label
-                          )}
+                      {m.title === "Email Quotes" ? (
+                        <p className="text-neutral-200 text-base">
+                          <a
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const user = "hello";
+                              const domain = "sunlitesigns.com";
+                              window.location.href = `mailto:${user}@${domain}`;
+                            }}
+                            className="hover:underline hover:text-orange-300 transition-colors"
+                          >
+                            Click to reveal email
+                          </a>
                         </p>
-                      )}
+                      ) : (
+                        <>
+                          {m.primary?.label && (
+                            <p className="text-neutral-200 text-base font-medium mb-2">
+                              {m.primary.href ? (
+                                <Link href={m.primary.href} className="hover:underline hover:text-orange-300 transition-colors">
+                                  {m.primary.label}
+                                </Link>
+                              ) : (
+                                m.primary.label
+                              )}
+                            </p>
+                          )}
 
-                      {m.secondary?.label && (
-                        <p className="text-neutral-300 text-sm mb-2">
-                          {m.secondary.href ? (
-                            <Link href={m.secondary.href} className="hover:underline">
-                              {m.secondary.label}
-                            </Link>
-                          ) : (
-                            m.secondary.label
+                          {m.secondary?.label && (
+                            <p className="text-neutral-200 text-base font-medium mb-3">
+                              {m.secondary.href ? (
+                                <Link href={m.secondary.href} className="hover:underline hover:text-orange-300 transition-colors">
+                                  {m.secondary.label}
+                                </Link>
+                              ) : (
+                                m.secondary.label
+                              )}
+                            </p>
                           )}
-                        </p>
+                        </>
                       )}
 
                       {m.description && (
@@ -202,9 +221,18 @@ export default function Contact() {
 
               <p className="text-sm text-neutral-400 mt-4">
                 Prefer email?{" "}
-                <Link href="mailto:hello@sunlitesigns.com" className="text-orange-300 hover:underline">
-                  hello@sunlitesigns.com
-                </Link>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const user = "hello";
+                    const domain = "sunlitesigns.com";
+                    window.location.href = `mailto:${user}@${domain}`;
+                  }}
+                  className="text-orange-300 hover:underline"
+                >
+                  Click to email us
+                </a>
               </p>
             </div>
           </div>

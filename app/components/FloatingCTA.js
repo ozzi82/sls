@@ -2,63 +2,122 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MessageCircle, X } from "lucide-react";
+import { MessageCircle, X, Phone } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function FloatingCTA() {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setIsVisible(true), 2000); // show after 2s
-    return () => clearTimeout(t);
+    // Show after scrolling or after 2 seconds
+    const handleScroll = () => {
+      if (window.scrollY > 300) setIsVisible(true);
+    };
+
+    const timer = setTimeout(() => setIsVisible(true), 2000);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {/* Expanded card */}
-      {isExpanded && (
-        <div className="absolute bottom-16 right-0 mb-2 animate-in fade-in-0">
-          <div className="rounded-lg border border-neutral-700 bg-neutral-900/95 shadow-xl p-4 max-w-xs relative">
-            <button
-              aria-label="Close"
-              onClick={() => setIsExpanded(false)}
-              className="absolute top-2 right-2 p-1 rounded-full hover:bg-neutral-800"
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          className="fixed bottom-6 right-6 z-50"
+        >
+          {isExpanded ? (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              className="flex flex-col gap-3 items-end mb-3"
             >
-              <X className="w-4 h-4 text-neutral-300" />
-            </button>
-            <h3 className="font-semibold text-neutral-100 mb-2">Get Your Quote</h3>
-            <p className="text-sm text-neutral-400 mb-3">
-              Ready to start your project? Get wholesale pricing and professional drawings in 24–48 hours.
-            </p>
+              {/* Enhanced card with glassmorphism */}
+              <div className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl p-5 max-w-xs">
+                <button
+                  aria-label="Close"
+                  onClick={() => setIsExpanded(false)}
+                  className="absolute top-3 right-3 p-2 rounded-full hover:bg-white/20 transition"
+                >
+                  <X className="w-4 h-4 text-white" />
+                </button>
 
-            <div className="space-y-2">
-              <Link
-                href="/contact"
-                className="block w-full text-center rounded-md px-3 py-2 font-medium bg-orange-500 text-white hover:bg-orange-600 transition"
-              >
-                Request Quote
-              </Link>
-              <Link
-                href="/products"
-                className="block w-full text-center rounded-md px-3 py-2 font-medium border border-neutral-700 text-neutral-100 hover:bg-neutral-800 transition"
-              >
-                View Products
-              </Link>
-            </div>
-          </div>
-        </div>
+                <h3 className="font-bold text-white mb-2 text-lg">Get 48-Hour Quote</h3>
+                <p className="text-sm text-neutral-200/90 mb-4">
+                  Wholesale pricing and professional drawings delivered fast.
+                </p>
+
+                <div className="space-y-2">
+                  <Link
+                    href="/contact"
+                    className="block w-full text-center rounded-xl px-4 py-3 font-semibold text-neutral-900 shadow-lg"
+                    style={{ background: "linear-gradient(90deg,#ffb84d,#ff7a1a)" }}
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    Request Quote
+                  </Link>
+
+                  <a
+                    href="tel:+16892940912"
+                    className="flex items-center justify-center gap-2 w-full text-center rounded-xl px-4 py-3 font-medium border border-white/20 text-white hover:bg-white/10 transition"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Call East: (689) 294-0912
+                  </a>
+
+                  <a
+                    href="tel:+16512302827"
+                    className="flex items-center justify-center gap-2 w-full text-center rounded-xl px-4 py-3 font-medium border border-white/20 text-white hover:bg-white/10 transition"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Call West: (651) 230-2827
+                  </a>
+
+                  <Link
+                    href="/products"
+                    className="block w-full text-center rounded-xl px-4 py-2 font-medium text-neutral-300 hover:text-white hover:bg-white/5 transition text-sm"
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    View Products
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsExpanded(true)}
+              className="rounded-full w-16 h-16 shadow-2xl shadow-orange-500/40 flex items-center justify-center relative overflow-hidden"
+              style={{ background: "linear-gradient(135deg,#ffb84d,#ff7a1a)" }}
+              aria-label="Open quote options"
+            >
+              {/* Pulse effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full bg-white/20"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.5, 0, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <MessageCircle className="w-7 h-7 text-neutral-900 relative z-10" />
+            </motion.button>
+          )}
+        </motion.div>
       )}
-
-      {/* Floating button */}
-      <button
-        aria-label="Open quote options"
-        onClick={() => setIsExpanded((v) => !v)}
-        className="rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all duration-300 bg-orange-500 hover:bg-orange-600 flex items-center justify-center"
-      >
-        <MessageCircle className="w-6 h-6 text-white" />
-      </button>
-    </div>
+    </AnimatePresence>
   );
 }

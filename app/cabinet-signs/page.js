@@ -23,7 +23,7 @@ export default function Page() {
     title: "LED Cabinet Signs",
     description:
       "High-visibility cabinet signs with UL-listed LEDs, robust frames, and weather-sealed construction—ideal for roadside and quick service sites.",
-    image: "/images/cabinet.jpg",
+    image: "/images/references/ref2.jpg",
     chips: ["High visibility", "UL-listed LEDs", "Rugged build"],
     specs: {
       Illumination: "Internal LED arrays, even diffusion",

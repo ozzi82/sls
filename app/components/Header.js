@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Home, Info, Phone, FolderKanban } from "lucide-react";
 import { motion } from "framer-motion";
-import { products, getAllCategories } from "../data/products";
+import { getAllProducts, siteConfig, images } from "../config/site";
 
 // helper: active route check
 const useIsActive = (pathname) => (href) => {
@@ -101,7 +101,9 @@ export default function Header() {
   const closeTimer = useRef(null);
 
   const grouped = useMemo(() => {
-    return getAllCategories().map((category) => ({
+    const products = getAllProducts();
+    const categories = [...new Set(products.map((p) => p.category))];
+    return categories.map((category) => ({
       category,
       items: products.filter((p) => p.category === category),
     }));
@@ -130,7 +132,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 font-bold text-white">
-            <img src="/logo.png" alt="Sunlite Signs" className="h-8 w-auto" />
+            <img src={images.logo} alt={siteConfig.name} className="h-8 w-auto" width="auto" height="32" />
           </Link>
 
           {/* Desktop Nav */}
@@ -228,13 +230,13 @@ export default function Header() {
                 )}
               </div>
 
-              {/* right: Get Quote */}
+              {/* right: Get Quote - Enhanced with 48h messaging */}
               <Link
                 href="/contact"
-                className="relative z-10 inline-flex items-center rounded-xl px-4 py-2 font-semibold text-neutral-900"
+                className="relative z-10 inline-flex flex-col items-center rounded-xl px-5 py-2 font-semibold text-neutral-900 hover:scale-105 transition-transform shadow-lg shadow-orange-500/20"
                 style={{ background: "linear-gradient(90deg,#ffb84d,#ff7a1a)" }}
               >
-                Get Quote
+                <span className="text-sm">Get 48-Hour Quote</span>
               </Link>
             </motion.div>
           </nav>
@@ -319,11 +321,11 @@ export default function Header() {
 
               <Link
                 href="/contact"
-                className="inline-flex items-center self-start rounded-xl px-4 py-2 font-semibold text-neutral-900 mt-2"
+                className="inline-flex items-center self-start rounded-xl px-4 py-2 font-semibold text-neutral-900 mt-2 shadow-lg"
                 style={{ background: "linear-gradient(90deg,#ffb84d,#ff7a1a)" }}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Get Quote
+                Get 48-Hour Quote
               </Link>
             </nav>
           </div>

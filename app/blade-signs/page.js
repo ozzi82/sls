@@ -1,20 +1,24 @@
 import Link from "next/link";
 import ProductHero from "../products/ProductHero";
 import FAQ from "../components/FAQ";
-import { ProductSchema } from "../components/SeoSchema";
+import JsonLd from "../components/JsonLd";
+
+const SITE = "https://www.sunlitesigns.com";
 
 export const metadata = {
-  title: "Blade Signs | Wholesale | Sunlite Signs",
+  title: "Wholesale Blade Signs | Custom Projecting Signs | UL Listed LED Illumination",
   description:
-    "Architectural blade signs for retail and commercial corridors. Double-sided options, lighting, and premium finishes.",
+    "Premium wholesale blade signs & projecting signage for retail corridors, shopping centers, and commercial streetscapes. Double-sided visibility with optional LED illumination. UL listed components, 48-hour quotes, 3-week delivery across USA & Canada.",
+  keywords: "blade signs wholesale, projecting signs, double-sided blade signs, illuminated blade signs, retail corridor signage, architectural projecting signs, custom blade signs, LED blade signs, commercial projecting signage, perpendicular wall signs",
   openGraph: {
-    title: "Blade Signs | Wholesale | Sunlite Signs",
+    title: "Wholesale Blade Signs | Custom Projecting Signs Manufacturing",
     description:
-      "Architectural blade signs for retail and commercial corridors. Double-sided options and lighting.",
-    url: "https://www.sunlitesigns.com/blade-signs",
-    images: ["/og/blade-signs.png"],
+      "Premium blade signs for retail and commercial corridors. Double-sided, optional LED, UL listed. 48-hour quotes.",
+    url: `${SITE}/blade-signs`,
+    type: "website",
+    images: [`${SITE}/og/blade-signs.png`],
   },
-  alternates: { canonical: "https://www.sunlitesigns.com/blade-signs" },
+  alternates: { canonical: `${SITE}/blade-signs` },
 };
 
 export default function Page() {
@@ -23,7 +27,7 @@ export default function Page() {
     title: "Architectural Blade Signs",
     description:
       "Premium blade signs engineered for retail corridors and streetscapes. Double-sided visibility with optional LED illumination.",
-    image: "/images/blade.jpg",
+    image: "/images/references/ref1.jpg",
     chips: ["Double-sided", "Optional LED", "Architectural finishes"],
     specs: {
       Orientation: "Perpendicular wall-mount",
@@ -41,23 +45,91 @@ export default function Page() {
     ],
   };
 
-  return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100">
-      <ProductSchema
-        name="Blade Signs"
-        description={product.description}
-        brand="Sunlite Signs"
-        sku="BLADE-ARCH"
-        category="Architectural Blade Sign"
-        material="Aluminum / Acrylic"
-        additionalProperty={[
-          { name: "Orientation", value: "Perpendicular mount" },
-          { name: "Illumination", value: "None / edge-lit / panel-lit" },
-          { name: "Finish", value: "Paint / powder / brushed" },
-        ]}
-      />
+  const bladeSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Blade Signs & Projecting Signs",
+    brand: { "@type": "Brand", name: "Sunlite Signs" },
+    category: "Architectural Projecting Signage",
+    description: "Premium double-sided blade signs and projecting signage for retail corridors, shopping centers, and commercial streetscapes. Available with optional UL listed LED illumination.",
+    url: `${SITE}/blade-signs`,
+    image: `${SITE}/images/references/ref1.jpg`,
+    manufacturer: {
+      "@type": "Organization",
+      name: "Sunlite Signs LLC"
+    },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Orientation",
+        value: "Perpendicular wall-mount"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Visibility",
+        value: "Double-sided"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Illumination Options",
+        value: "Non-illuminated, edge-lit, face-lit, halo-lit"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Materials",
+        value: "Aluminum, stainless steel, acrylic"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Warranty",
+        value: "3 years"
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Quote Turnaround",
+        value: "24-48 hours"
+      }
+    ]
+  };
 
-      <ProductHero product={product} />
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What are blade signs?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Blade signs, also called projecting signs, are mounted perpendicular to building walls. They extend outward from the facade to provide excellent visibility from both directions along corridors, streets, or walkways. They're ideal for retail environments, shopping centers, and commercial streetscapes."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "What illumination options are available for blade signs?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Blade signs can be non-illuminated, edge-lit with LED strips around the perimeter, face-lit with internal LEDs for glowing graphics, or halo-lit for a backlit glow effect. All illuminated options use UL listed LED components with 3-year warranty."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "What sizes can blade signs be manufactured in?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Blade signs are custom-manufactured to your specifications. Common sizes range from 12 inches to 48 inches in height and 12 inches to 60 inches in projection from the wall. Custom shapes including rectangular, circular, and custom die-cut shapes are available."
+        }
+      }
+    ]
+  };
+
+  return (
+    <>
+      <JsonLd data={bladeSchema} />
+      <JsonLd data={faqSchema} />
+
+      <main className="min-h-screen bg-neutral-950 text-neutral-100">
+        <ProductHero product={product} />
 
       <section className="relative py-14">
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -105,5 +177,6 @@ export default function Page() {
         <FAQ withSchema={false} maxItems={3} title="Questions about blade signs" />
       </section>
     </main>
+    </>
   );
 }

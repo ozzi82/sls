@@ -1,38 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Factory, Truck, Award, Zap } from "lucide-react";
-
-const heroPlaceholder = "/hero-placeholder.jpg"; // put a file into /public or change this
+import { heroContent, images } from "../config/site";
 
 export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const content = {
-    title: "Wholesale Trimless Channel Letters &",
-    subtitle: "Cast Block Acrylic",
-    description:
-      "UL-listed trimless channel letters and precision-cut cast block acrylic letters. German engineering precision meets USA — serving sign companies across USA and Canada.",
-    image_url:
-      "https://www.sunlitesigns.com/wp-content/uploads/2024/12/RADAI-1024x768.jpg",
-    button_text: "Request Wholesale Quote",
-    button_url: "/contact",
-    additional_data: {
-      tagline: "Engineered for Sign Professionals",
-      secondaryButtonText: "View Product Catalog",
-      secondaryButtonUrl: "/products",
-      stats: [
-        { icon: "Factory", value: "25+ Years", label: "Manufacturing" },
-        { icon: "Truck", value: "24 – 48h", label: "Quote Response" },
-        { icon: "Award", value: "UL Listed", label: "Components" },
-        { icon: "Zap", value: "LED", label: "Efficient Lighting" },
-      ],
-    },
-  };
+  // Fallback: if the image somehow loaded before hydration and neither
+  // onLoad nor onLoadingComplete fired, poll once after mount.
+  useEffect(() => {
+    if (imageLoaded) return;
+    const id = setTimeout(() => setImageLoaded(true), 3000);
+    return () => clearTimeout(id);
+  }, [imageLoaded]);
 
   const icons = { Factory, Truck, Award, Zap };
-  const getIcon = (name) => icons[name] || Factory; // <-- JS-safe
+  const getIcon = (name) => icons[name] || Factory;
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
@@ -50,18 +36,18 @@ export default function Hero() {
           </div>
         )}
 
-        <img
-          src={content.image_url || heroPlaceholder}
+        <Image
+          src={images.hero || images.heroFallback}
           alt="Professional channel letter manufacturing facility"
-          className={`w-full h-full object-cover object-left transition-opacity duration-500 ${
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className={`object-cover object-left transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setImageLoaded(true)}
-          onError={(e) => {
-            if (e.currentTarget.src !== heroPlaceholder) e.currentTarget.src = heroPlaceholder;
-            setImageLoaded(true);
-          }}
-          loading="eager"
+          onError={() => setImageLoaded(true)}
         />
 
         {/* subtle vignette to improve contrast for the glass card */}
@@ -93,23 +79,23 @@ export default function Hero() {
 
           <div className="relative p-5 md:p-7 space-y-4">
             <h1 className="text-2xl lg:text-4xl font-bold text-white leading-tight drop-shadow-lg">
-              {content.title}
+              {heroContent.title}
               <span className="block text-3xl lg:text-5xl mt-1 bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent font-extrabold drop-shadow-lg">
-                {content.subtitle}
+                {heroContent.subtitle}
               </span>
               <span className="block text-sm lg:text-lg mt-2 text-white/90 drop-shadow-md">
-                {content.additional_data.tagline}
+                {heroContent.tagline}
               </span>
             </h1>
 
             <p className="text-sm lg:text-base text-white/85 leading-relaxed drop-shadow-md">
-              {content.description}
+              {heroContent.description}
             </p>
 
             {/* CTAs (glassy primary + ghost glass) */}
             <div className="flex flex-col gap-2">
               <Link
-                href={content.button_url}
+                href={heroContent.primaryButton.url}
                 className="text-sm px-4 py-3 rounded-lg text-neutral-900 font-semibold inline-flex items-center justify-center shadow-md"
                 style={{
                   background:
@@ -117,22 +103,22 @@ export default function Hero() {
                   backgroundBlendMode: "overlay, normal",
                 }}
               >
-                {content.button_text}
+                {heroContent.primaryButton.text}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
 
               <Link
-                href={content.additional_data.secondaryButtonUrl}
+                href={heroContent.secondaryButton.url}
                 className="text-sm px-4 py-3 rounded-lg text-white/95 font-semibold text-center border border-white/25 bg-white/10 hover:bg-white/15 backdrop-blur-md"
               >
-                {content.additional_data.secondaryButtonText}
+                {heroContent.secondaryButton.text}
               </Link>
             </div>
 
             {/* Key Benefits */}
             <div className="grid grid-cols-2 gap-4 text-sm pt-2">
-              {content.additional_data.stats.map((s, i) => {
-                const Icon = getIcon(s.icon); // <-- no TS cast
+              {heroContent.stats.map((s, i) => {
+                const Icon = getIcon(s.icon);
                 return (
                   <div
                     key={i}

@@ -1,49 +1,10 @@
 import Link from "next/link";
-
-const productsData = [
-  {
-    image: "/images/trimless.jpg",
-    title: "Trimless Channel Letters",
-    description: "True trimless, flush-face letters with UL-listed LEDs and clean modern edges.",
-    price: "Starting at $299",
-    features: ["Seamless faces", "UL-listed LEDs", "Weather sealed", "24–48h drawings"],
-    href: "/channel-letters",
-  },
-  {
-    image: "/images/acrylic.jpg",
-    title: "Cast Acrylic Letters",
-    description: "Precision-cut cast block acrylic with polished edges and custom finishes.",
-    price: "Starting at $14/in",
-    features: ["Polished edges", "Stud-mounted", "PMS/RAL colors", "Indoor/Outdoor"],
-    href: "/cast-acrylic-letters",
-  },
-  {
-    image: "/images/cabinet.jpg",
-    title: "LED Cabinet Signs",
-    description: "High-visibility cabinet signs with rugged frames and even LED illumination.",
-    price: "Starting at $2,999",
-    features: ["Even diffusion", "Durable frames", "Wall/Pylon mount", "UL components"],
-    href: "/cabinet-signs",
-  },
-  {
-    image: "/images/blade.jpg",
-    title: "Blade Signs",
-    description: "Architectural blade signs with double-sided visibility and optional lighting.",
-    price: "Custom pricing",
-    features: ["Double-sided", "LED options", "Architectural finishes", "Custom shapes"],
-    href: "/blade-signs",
-  },
-  {
-    image: "/images/ada.jpg",
-    title: "ADA Signs",
-    description: "Code-compliant ADA signage with Grade 2 Braille and tactile lettering.",
-    price: "From $45/panel",
-    features: ["Grade 2 Braille", "Tactile lettering", "Contrast compliant", "Durable finishes"],
-    href: "/ada-signs",
-  },
-];
+import Image from "next/image";
+import { getFeaturedProducts } from "../config/site";
 
 export default function Products() {
+  // Load featured products for homepage (max 4)
+  const productsData = getFeaturedProducts();
   return (
     <section id="products" className="py-20 bg-neutral-950 relative overflow-hidden">
       {/* Rounded, drifting background orbs */}
@@ -79,8 +40,8 @@ export default function Products() {
           </p>
         </div>
 
-        {/* 5 products — add xl:5 to show five-up at wide screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        {/* Featured products grid - 4 products */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {productsData.map((p, i) => (
             <div
               key={i}
@@ -111,26 +72,56 @@ export default function Products() {
                 />
               </div>
 
-              <div className="aspect-video overflow-hidden">
-                <img
+              <div className="aspect-video overflow-hidden relative">
+                <Image
                   src={p.image}
                   alt={`${p.title} wholesale signage`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 20vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  quality={75}
                 />
               </div>
 
               <div className="p-6 relative z-10">
+                {/* Badges */}
+                {p.badges && p.badges.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {p.badges.map((badge, badgeIdx) => (
+                      <span
+                        key={badgeIdx}
+                        className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400"
+                      >
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-semibold text-white">{p.title}</h3>
-                  <span className="text-orange-400 font-semibold text-lg">{p.price}</span>
+                  <span className="text-orange-400 font-semibold text-lg whitespace-nowrap ml-2">{p.price}</span>
                 </div>
-                <p className="text-neutral-300">{p.description}</p>
 
-                <ul className="space-y-2 my-6">
+                {/* Category tag */}
+                {p.category && (
+                  <div className="mb-3">
+                    <span className="inline-block text-xs text-neutral-400 font-medium">
+                      {p.category}
+                    </span>
+                  </div>
+                )}
+
+                <p className="text-neutral-300 text-sm mb-4">{p.description}</p>
+
+                <ul className="space-y-2 mb-6">
                   {p.features.map((f, idx) => (
-                    <li key={idx} className="text-sm text-neutral-300 flex items-center">
-                      <span className="w-2 h-2 bg-orange-400 rounded-full mr-3" />
-                      {f}
+                    <li key={idx} className="text-sm text-neutral-300 flex items-start">
+                      <svg className="w-4 h-4 text-orange-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -138,14 +129,15 @@ export default function Products() {
                 <div className="flex gap-2">
                   <Link
                     href={`/contact?product=${encodeURIComponent(p.title)}`}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-white/10 border border-white/30 text-white font-medium rounded hover:bg-white/20 transition"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2.5 font-semibold text-neutral-900 rounded-xl hover:scale-105 transition-transform shadow-lg"
+                    style={{ background: "linear-gradient(90deg,#ffb84d,#ff7a1a)" }}
                     aria-label={`Get quote for ${p.title}`}
                   >
                     Get Quote
                   </Link>
                   <Link
                     href={p.href}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-white/10 border border-white/30 text-white rounded hover:bg-white/20 transition"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-white/10 border border-white/30 text-white font-medium rounded-xl hover:bg-white/20 transition"
                     aria-label={`View details for ${p.title}`}
                   >
                     Details
